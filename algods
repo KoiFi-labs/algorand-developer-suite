@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+
+const chalk = require('chalk');
+const args = process.argv;
+const { usage, createAccountUsage } = require('./utils/usageFunctions')
+const sandboxService = require('./services/sandboxService')
+const accountsService = require('./services/accountsService')
+
+const commands = ['startnet', 'stopnet', 'getaccount', 'createaccount', 'listaccounts', 'help']
+
+// used to log errors to the console in red color
+function errorLog(error) {
+  const eLog = chalk.red(error)
+  console.log(eLog)
+}
+
+// if (commands.indexOf(args[2]) == -1) {
+//   errorLog('invalid command passed')
+//   usage()
+// }
+
+const processGetAccountInstruction = () => {
+  if (!args[3]) {
+    errorLog('Missing options')
+    createAccountUsage()  
+  } else if (args[3] === '-a') {
+    accountsService.getAccount(args[4]).then((res) => {
+      if (!res.ok) {
+        errorLog(res.msg)
+        createAccountUsage()
+      } else console.log(res.msg)
+    })
+  } else if (args[3] === '-h') createAccountUsage()
+}
+
+const processListAccountsInstruction = async () => {
+  await accountsService.listAccounts().then((res) => {
+    if (!res.ok) {
+      errorLog(res.msg)
+    } else console.log(res.msg)
+  })
+}
+
+switch(args[2]) {
+  case 'help':
+    usage();
+    break
+  case 'startnet':
+    sandboxService.startNetwork();
+    break
+  case 'stopnet':
+    sandboxService.stopNetwork();
+    break
+  case 'getaccount':
+    processGetAccountInstruction();
+    break
+  case 'createaccount':
+    accountsService.createAccount();
+    break
+  case 'listaccounts':
+    processListAccountsInstruction();
+    break
+  case undefined:
+    usage();
+    break
+  default:
+    errorLog('invalid command passed');
+    usage();
+}

@@ -1,0 +1,24 @@
+{
+  "name": "algorand-developer-suite",
+  "version": "1.0.0",
+  "description": "CLI tools for local development on algorand",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "algorand",
+    "teal",
+    "blockchain",
+    "devtools"
+  ],
+  "author": "luisdanielgp",
+  "license": "ISC",
+  "dependencies": {
+    "algosdk": "^1.13.1",
+    "axios": "^0.26.0",
+    "chalk": "^2.4.1",
+    "dotenv": "^16.0.0",
+    "readline": "^1.3.0"
+  }
+}
