@@ -13,7 +13,7 @@
     "devtools"
   ],
   "author": "luisdanielgp",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "algosdk": "^1.13.1",
     "axios": "^0.26.0",
