@@ -15,6 +15,7 @@ const usage = function() {
     createaccount:  Creates a new Algorand account in your private network TODO
     fundaccount:    Funds an existing Algorand account TODO
     createtoken:    Creates a new ASA in your private network TODO
+    createapp:      Issues a transaction that creates an application WIP
     help:           Displays this help guide
   `
 
