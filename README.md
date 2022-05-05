@@ -42,6 +42,7 @@ sandbox path correctly
     createaccount:  Creates a new Algorand account in your private network TODO
     fundaccount:    Funds an existing Algorand account TODO
     createtoken:    Creates a new ASA in your private network TODO
+    createapp:      Issues a transaction that creates an application
     help:           Displays this help guide
 ```
 
