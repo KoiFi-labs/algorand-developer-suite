@@ -33,14 +33,24 @@ const listAccounts = async () => {
   }
 }
 
-const createAccount = () => {
-  // let account = algodClient.generateAccount();
-  // console.log("Account Address: ", account.addr);
-  // return account.addr
+const createAccount = async () => {
+  try {
+    const account = await algosdk.generateAccount();
+    return { ok: true, msg: account.addr}
+  } catch (error) {
+    return { ok: false, msg: error }
+  }
 }
+
+// const fundAccount = async (receiverAccount, amt) => {
+//   const accounts = await listAccounts()
+//   const senderAccount = accounts[0].address
+//   const txn
+// }
 
 module.exports = {
   getAccount,
   listAccounts,
-  createAccount
+  createAccount,
+  // fundAccount
 }

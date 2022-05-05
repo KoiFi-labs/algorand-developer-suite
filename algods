@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 const args = process.argv;
-const { usage, createAccountUsage } = require('./utils/usageFunctions')
+const { usage, createAccountUsage, createAppUsage } = require('./utils/usageFunctions')
 const sandboxService = require('./services/sandboxService')
 const accountsService = require('./services/accountsService')
 const appsService = require('./services/appsService')
@@ -31,19 +31,71 @@ const processGetAccountInstruction = () => {
         createAccountUsage()
       } else console.log(res.msg)
     })
-  } else if (args[3] === '-h') createAccountUsage()
+  } else if (args[3] === '-h') { 
+    createAccountUsage()
+  } else {
+    errorLog('Invalid option')
+    createAccountUsage()
+  }
 }
 
-const processListAccountsInstruction = async () => {
-  await accountsService.listAccounts().then((res) => {
+const processListAccountsInstruction = () => {
+  accountsService.listAccounts().then((res) => {
     if (!res.ok) {
       errorLog(res.msg)
     } else console.log(res.msg)
   })
 }
 
+const getAppData = (appName) => {
+  const stateData = require(`./apps/${appName}/${appName}.json`)
+  const data = {
+    'approvalProgram': `${appName}.teal`,
+    'clearProgram': 'clear.teal',
+    'stateData': {
+      'globalByteSlices': stateData.numGlobalByteSlices,
+      'globalInts': stateData.numGlobalInts,
+      'localByteSlices': stateData.numLocalByteSlices,
+      'localInts': stateData.numLocalInts,
+    },
+    'parameters': stateData.parameters
+  }
+  return data
+
+}
+
 const processCreateAppInstruction = () => {
-  console.log(appsService.createApp())
+  if (!args[3]) {
+    errorLog('Missing options')
+    createAppUsage()  
+  } else if (args[3] === '-creator' && args[5] === '-app') {
+    const appData = getAppData(args[6])
+    sandboxService.createApp({
+      'appName': args[6],
+      'creatorAddress': args[4],
+      'approvalProgram': appData.approvalProgram,
+      'clearProgram': appData.clearProgram,
+      'globalByteSlices': appData.stateData.globalByteSlices,
+      'globalInts': appData.stateData.globalInts,
+      'localByteSlices': appData.stateData.localByteSlices,
+      'localInts': appData.stateData.localInts
+    })
+  } else if (args[3] === '-h') { 
+    createAppUsage()
+  } else {
+    errorLog('Invalid options')
+    createAppUsage()
+  }
+}
+
+const processCreateAccountInstruction = () => {
+  accountsService.createAccount().then((res) => {
+    if (!res.ok) {
+      errorLog(res.msg)
+    } else {
+      console.log(res.msg)
+    }
+  })
 }
 
 switch(args[2]) {
@@ -60,7 +112,7 @@ switch(args[2]) {
     processGetAccountInstruction();
     break
   case 'createaccount':
-    accountsService.createAccount();
+    processCreateAccountInstruction();
     break
   case 'listaccounts':
     processListAccountsInstruction();
