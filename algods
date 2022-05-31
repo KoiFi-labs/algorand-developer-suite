@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 const args = process.argv;
-const { usage, createAccountUsage, createAppUsage } = require('./utils/usageFunctions')
+const { usage, createAccountUsage, createAppUsage, callAppUsage } = require('./utils/usageFunctions')
 const sandboxService = require('./services/sandboxService')
 const accountsService = require('./services/accountsService')
 const appsService = require('./services/appsService')
@@ -88,6 +88,20 @@ const processCreateAppInstruction = () => {
   }
 }
 
+const processCallAppInstruction = () => {
+  if (!args[3]) {
+    errorLog('Missing options')
+    callAppUsage()  
+  } else if (args[3] === '-app' && args[5] === '-f' && args[7] === '-args') {
+    // sandboxService.callApp()
+  } else if (args[3] === '-h') { 
+    callAppUsage()
+  } else {
+    errorLog('Invalid options')
+    callAppUsage()
+  }
+}
+
 const processCreateAccountInstruction = () => {
   accountsService.createAccount().then((res) => {
     if (!res.ok) {
@@ -119,6 +133,9 @@ switch(args[2]) {
     break
   case 'createapp':
     processCreateAppInstruction();
+    break
+  case 'callapp':
+    processCallAppInstruction();
     break
   case undefined:
     usage();
