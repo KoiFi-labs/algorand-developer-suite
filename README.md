@@ -17,12 +17,19 @@ for installation instructions.
 Assuming you allready have previous requirements and Docker is running in your machine:
 
 1. Clone algorand-development-suite repo
-2. cd to /algorand-developer-suite
-3. Create `.env` file following `.env.example`, make sure to set your local 
+2. Add this project folder as bind volume in sandbox `docker-compose.yml` under key `services.algod`:
+    ```yml
+    volumes:
+      - type: bind
+        source: <path>
+        target: /data
+    ```
+3. cd to /algorand-developer-suite
+4. Create `.env` file following `.env.example`, make sure to set your local 
 sandbox path correctly
-4. run npm i to install dependencies
-5. run ./algods, to verify it installed correctly the usage guide should display
-6. Start developing on [Algorand](https://developer.algorand.org/)
+5. run npm i to install dependencies
+6. run ./algods, to verify it installed correctly the usage guide should display
+7. Start developing on [Algorand](https://developer.algorand.org/)
 
 ## Usage
 
