@@ -69,8 +69,13 @@ const createApp = async (params) => {
   await sandboxCreateApp(params.appName, params.creatorAddress, params.approvalProgram, params.clearProgram, params.globalByteSlices, params.globalInts, params.localByteSlices, params.localInts);
 }
 
+// const callApp = async (params) => {
+//   await sandboxCallApp(params.appName, params.creatorAddress, params.approvalProgram, params.clearProgram, params.globalByteSlices, params.globalInts, params.localByteSlices, params.localInts);
+// }
+
 module.exports = {
   startNetwork,
   stopNetwork,
-  createApp
+  createApp,
+  // callApp
 }

@@ -15,7 +15,9 @@ const usage = function() {
     createaccount:  Creates a new Algorand account in your private network [TODO]
     fundaccount:    Funds an existing Algorand account [TODO]
     createtoken:    Creates a new ASA in your private network [TODO]
+    build:          Compiles Approval and Clear program from pyteal code [TODO]
     createapp:      Issues a transaction that creates an application
+    appinfo:        Displays App info [TODO]
     callapp:        Issues a transaction that calls an application [WIP]
     help:           Displays this help guide
   `
@@ -68,6 +70,34 @@ const callAppUsage = () => {
                        strings, use the form 'str:hello'. For addresses, use the form 
                        'addr:XYZ...'.
     -h                 Displays this help guide
+  `
+  console.log(usageText)
+}
+
+const buildUsage = () => {
+  const usageText = `
+  usage:
+
+    $ build <options>
+  
+  options:
+
+    -c <contract_name>  Compiles the TEAL scripts for the given contract 
+    -h                  Displays this help guide
+  `
+  console.log(usageText)
+}
+
+const appinfoUsage = () => {
+  const usageText = `
+  usage:
+
+    $ appinfo <options>
+  
+  options:
+
+    -a <app_id>  Displays the App with the given id
+    -h           Displays this help guide
   `
   console.log(usageText)
 }
