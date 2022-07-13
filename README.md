@@ -29,9 +29,9 @@ Assuming you allready have previous requirements and Docker is running in your m
 sandbox path correctly
 5. Create `apps/` directory at root
 6. Create `pyteal/contracts/` directory
-5. run npm i to install dependencies
-6. run ./algods, to verify it installed correctly the usage guide should display
-7. Start developing on [Algorand](https://developer.algorand.org/)
+7. run npm i to install dependencies
+8. run ./algods, to verify it installed correctly the usage guide should display
+9. Start developing on [Algorand](https://developer.algorand.org/)
 
 ## Usage
 

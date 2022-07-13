@@ -318,3 +318,7 @@ cython_debug/
 
 # apps
 apps/*
+
+# pyteal
+pyteal/contracts/*
+pyteal/build/*
