@@ -27,6 +27,8 @@ Assuming you allready have previous requirements and Docker is running in your m
 3. cd to /algorand-developer-suite
 4. Create `.env` file following `.env.example`, make sure to set your local 
 sandbox path correctly
+5. Create `apps/` directory at root
+6. Create `pyteal/contracts/` directory
 5. run npm i to install dependencies
 6. run ./algods, to verify it installed correctly the usage guide should display
 7. Start developing on [Algorand](https://developer.algorand.org/)
