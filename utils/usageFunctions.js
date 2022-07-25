@@ -64,11 +64,12 @@ const callAppUsage = () => {
 
     -app int           Application ID
     -f string          Account to call app from
+    -oc int            On application complete value 
     -args  array       Args to encode for application transactions 
                        (all will be encoded to a byte slice). For ints, use the form 
                        'int:1234'. For raw bytes, use the form 'b64:A=='. For printable 
                        strings, use the form 'str:hello'. For addresses, use the form 
-                       'addr:XYZ...'.
+                       'addr:XYZ...'.  
     -h                 Displays this help guide
   `
   console.log(usageText)

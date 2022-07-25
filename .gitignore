@@ -322,3 +322,6 @@ apps/*
 # pyteal
 pyteal/contracts/*
 pyteal/build/*
+
+# utils
+commands.md
