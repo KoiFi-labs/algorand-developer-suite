@@ -10,6 +10,10 @@ const token = process.env.ALGOD_TOKEN
 // Instantiate the algodv2 wrapper
 let algodClient = new algosdk.Algodv2(token, server, port);
 
+// Accounts from .env
+const account1Mnemonic = process.env.ACCOUNT_1
+const account2Mnemonic = process.env.ACCOUNT_2
+
 const onCompleteOptions = {
   NO_OP: 0,
   OPT_IN: 1,
@@ -64,26 +68,24 @@ const signAndSubmitTxn = async (txn, creatorAccount) => {
   const signedTxn = txn.signTxn(creatorAccount.sk)
   const txId = txn.txID().toString()
   console.log(`Signed transaction with txID: ${txId}`)
-  console.log(signedTxn)
   // Submit the transaction
-  // await algodClient.sendRawTransaction(signedTxn).do();
-  // // Wait for transaction to be confirmed
-  // confirmedTxn = await algosdk.waitForConfirmation(algodClient, txId, 4);
-  // //Get the completed Transaction
-  // console.log(`Transaction ${txId} confirmed in round ${confirmedTxn["confirmed-round"]}`);
-  // // display results
-  // let transactionResponse = await algodClient.pendingTransactionInformation(txId).do();
-  // let appId = transactionResponse['application-index'];
-  // return appId
+  await algodClient.sendRawTransaction(signedTxn).do();
+  // Wait for transaction to be confirmed
+  confirmedTxn = await algosdk.waitForConfirmation(algodClient, txId, 4);
+  //Get the completed Transaction
+  console.log(`Transaction ${txId} confirmed in round ${confirmedTxn["confirmed-round"]}`);
+  // display results
+  let transactionResponse = await algodClient.pendingTransactionInformation(txId).do();
+  let appId = transactionResponse['application-index'];
+  return appId
 }
 
-const callApp = async ({ appId, appArgs, from, onComplete }) => {
-  // algo-sandbox goal app call --app-id 1 --app-arg "int:2" --from FC74Y37WKCR5M7NTCDQ5ZLWWPNVALI7NQVHBKR3NLPOVLJYDI4TNK3TQUQ
-  // Create application call txn
+const callApp = async ({ appId, appArgs, onComplete }) => {
+  const account = algosdk.mnemonicToSecretKey(account1Mnemonic)
   const options = {
     'appIndex': parseInt(appId),
     'appArgs': appArgs,
-    'from': from,
+    'from': account.addr,
     'OnComplete': onCompleteOptions[onComplete]
   }
   if (appArgs) {
@@ -97,7 +99,8 @@ const callApp = async ({ appId, appArgs, from, onComplete }) => {
   }
   options.suggestedParams = await algodClient.getTransactionParams().do();
   const txn = await algosdk.makeApplicationCallTxnFromObject(options)
-  return await signAndSubmitTxn(txn, )
+  const submittedTxn = await signAndSubmitTxn(txn, account)
+  return submittedTxn
 }
 
 module.exports = {

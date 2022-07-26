@@ -55,7 +55,8 @@ sandbox path correctly
     build:          Compiles Approval and Clear program from pyteal code [TODO]
     createapp:      Issues a transaction that creates an application
     appinfo:        Displays App info [TODO]
-    callapp:        Issues a transaction that calls an application [WIP]
+    callapp:        Issues a transaction that calls an application, uses ACCOUNT_1
+                    from .env as sender
     help:           Displays this help guide
 ```
 

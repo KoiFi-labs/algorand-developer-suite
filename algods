@@ -109,17 +109,16 @@ const processCreateAppInstruction = () => {
 
 const processCallAppInstruction = () => {
   // required options
-  if (!args[4] || !args[6] || !args[8]) {
+  if (!args[4] || !args[6]) {
     errorLog('Missing options')
     callAppUsage()
-  } else if (args[3] === '-app' && args[5] === '-f' && args[7] === '-oc') {
+  } else if (args[3] === '-app' && args[5] === '-oc') {
     // valid options
     const txn = {
       appId: args[4],
-      from: args[6],
-      onComplete: args[8]
+      onComplete: args[6]
     }
-    if (args[9] === '-args' && args[10] !== undefined) txn.appArgs = args[10]
+    if (args[7] === '-args' && args[8] !== undefined) txn.appArgs = args[8]
     txnsService.callApp(txn)
   } else if (args[3] === '-h') { 
     // options for help

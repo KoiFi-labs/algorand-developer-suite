@@ -19,7 +19,8 @@ const usage = function() {
     build:          Compiles Approval and Clear program from pyteal code [TODO]
     createapp:      Issues a transaction that creates an application
     appinfo:        Displays App info [TODO]
-    callapp:        Issues a transaction that calls an application [WIP]
+    callapp:        Issues a transaction that calls an application, uses ACCOUNT_1
+                    from .env as sender
     help:           Displays this help guide
   `
 
@@ -79,7 +80,6 @@ const callAppUsage = () => {
   options:
 
     -app int           Application ID
-    -f string          Account to call app from
     -oc int            On application complete value 
     -args  array       Args to encode for application transactions 
                        (all will be encoded to a byte slice). For ints, use the form 
