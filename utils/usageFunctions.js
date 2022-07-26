@@ -12,8 +12,9 @@ const usage = function() {
     stopnet:        Stops sandbox environment and deletes docker containers
     getaccount:     Retrieves account info
     listaccounts:   Lists existing accounts in your private network
-    createaccount:  Creates a new Algorand account in your private network [TODO]
-    fundaccount:    Funds an existing Algorand account [TODO]
+    createaccount:  Creates a new Algorand account in your private network and
+                    funds it with 5 algos
+    fundaccount:    Funds an existing Algorand account
     createtoken:    Creates a new ASA in your private network [TODO]
     build:          Compiles Approval and Clear program from pyteal code [TODO]
     createapp:      Issues a transaction that creates an application
@@ -34,6 +35,21 @@ const createAccountUsage = () => {
   options:
 
     -a <address>    Returns account info for a given address
+    -h              Displays this help guide
+  `
+  console.log(usageText)
+}
+
+const fundAccount = () => {
+  const usageText = `
+  usage:
+
+    $ fundaccount <options>
+  
+  options:
+
+    -a <address>    Receiver address
+    -amt <int>      Amount to fund (min 100000 max 5000000)
     -h              Displays this help guide
   `
   console.log(usageText)

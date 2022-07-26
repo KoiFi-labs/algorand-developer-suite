@@ -48,8 +48,9 @@ sandbox path correctly
     stopnet:        Stops sandbox environment and deletes docker containers
     getaccount:     Retrieves account info
     listaccounts:   Lists existing accounts in your private network
-    createaccount:  Creates a new Algorand account in your private network [TODO]
-    fundaccount:    Funds an existing Algorand account [TODO]
+    createaccount:  Creates a new Algorand account in your private network and
+                    funds it with 5 algos
+    fundaccount:    Funds an existing Algorand account
     createtoken:    Creates a new ASA in your private network [TODO]
     build:          Compiles Approval and Clear program from pyteal code [TODO]
     createapp:      Issues a transaction that creates an application

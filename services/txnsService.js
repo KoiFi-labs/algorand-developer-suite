@@ -81,7 +81,7 @@ const callApp = async ({ appId, appArgs, from, onComplete }) => {
   // algo-sandbox goal app call --app-id 1 --app-arg "int:2" --from FC74Y37WKCR5M7NTCDQ5ZLWWPNVALI7NQVHBKR3NLPOVLJYDI4TNK3TQUQ
   // Create application call txn
   const options = {
-    'appIndex': appId,
+    'appIndex': parseInt(appId),
     'appArgs': appArgs,
     'from': from,
     'OnComplete': onCompleteOptions[onComplete]
@@ -90,13 +90,14 @@ const callApp = async ({ appId, appArgs, from, onComplete }) => {
     const argsArr = appArgs.slice(1,-1).split(",")
     options['appArgs'] = argsArr.map(a => {
       const splittedArg = a.split(":")
-      return splittedArg[0] === 'str' ? splittedArg[1]
+      const res = splittedArg[0] === 'str' ? splittedArg[1]
       : parseInt(splittedArg[1])
+      return algosdk.encodeObj(res)
     })
   }
-  // const txn = await algodClient.makeApplicationCallTxnFromObject(options)
-  // txn.suggestedParams = await algodClient.getTransactionParams().do();
-  console.log(options)  
+  options.suggestedParams = await algodClient.getTransactionParams().do();
+  const txn = await algosdk.makeApplicationCallTxnFromObject(options)
+  return await signAndSubmitTxn(txn, )
 }
 
 module.exports = {

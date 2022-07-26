@@ -40,6 +40,24 @@ const processGetAccountInstruction = () => {
   }
 }
 
+const processFundAccountInstruction = () => {
+  if (args.length < 6) {
+    errorLog('Missing options')
+    fundAccountUsage()
+  } else if (args[3] === '-a' && args[5] === '-amt') {
+    accountsService.fundAccount(args[4], args[6]).then((res) => {
+      if (!res.ok) {
+        errorLog(res.msg)
+      } else console.log(res.msg)
+    })
+  } else if (args[3] === '-h') { 
+    createAccountUsage()
+  } else {
+    errorLog('Invalid option')
+    createAccountUsage()
+  }
+}
+
 const processListAccountsInstruction = () => {
   accountsService.listAccounts().then((res) => {
     if (!res.ok) {
@@ -137,6 +155,9 @@ switch(args[2]) {
     break
   case 'createaccount':
     processCreateAccountInstruction();
+    break
+  case 'fundaccount':
+    processFundAccountInstruction();
     break
   case 'listaccounts':
     processListAccountsInstruction();
