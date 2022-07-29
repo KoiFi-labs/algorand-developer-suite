@@ -33,6 +33,10 @@ sandbox path correctly
 8. run ./algods, to verify it installed correctly the usage guide should display
 9. Start developing on [Algorand](https://developer.algorand.org/)
 
+## Setting up accounts to sign transactions
+
+TODO
+
 ## Usage
 
 ```

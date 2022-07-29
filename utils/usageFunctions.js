@@ -85,7 +85,8 @@ const callAppUsage = () => {
                        (all will be encoded to a byte slice). For ints, use the form 
                        'int:1234'. For raw bytes, use the form 'b64:A=='. For printable 
                        strings, use the form 'str:hello'. For addresses, use the form 
-                       'addr:XYZ...'.  
+                       'addr:XYZ...'.
+    -dr                Dry run the txn and output the result.
     -h                 Displays this help guide
   `
   console.log(usageText)

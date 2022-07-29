@@ -63,11 +63,20 @@ const assembleTxnGroup = async (group) => {
 //   return txn
 // }
 
-const signAndSubmitTxn = async (txn, creatorAccount) => {
+const signAndSubmitTxn = async (txn, creatorAccount, dryrun) => {
   // Sign the transaction
   const signedTxn = txn.signTxn(creatorAccount.sk)
   const txId = txn.txID().toString()
   console.log(`Signed transaction with txID: ${txId}`)
+  if (dryrun) {
+    const decodedTxn = await algosdk.decodeSignedTransaction(signedTxn)
+    const dr =  await algosdk.createDryrun({
+      client: algodClient,
+      txns: [decodedTxn]
+    })
+    console.log(dr)
+    return dr
+  }
   // Submit the transaction
   await algodClient.sendRawTransaction(signedTxn).do();
   // Wait for transaction to be confirmed
@@ -80,7 +89,7 @@ const signAndSubmitTxn = async (txn, creatorAccount) => {
   return appId
 }
 
-const callApp = async ({ appId, appArgs, onComplete }) => {
+const callApp = async ({ appId, appArgs, onComplete, dryrun }) => {
   const account = algosdk.mnemonicToSecretKey(account1Mnemonic)
   const options = {
     'appIndex': parseInt(appId),
@@ -99,12 +108,11 @@ const callApp = async ({ appId, appArgs, onComplete }) => {
   }
   options.suggestedParams = await algodClient.getTransactionParams().do();
   const txn = await algosdk.makeApplicationCallTxnFromObject(options)
-  const submittedTxn = await signAndSubmitTxn(txn, account)
-  return submittedTxn
+  return await signAndSubmitTxn(txn, account, dryrun)
 }
 
 module.exports = {
   // createTxnGroup,
   noOpTxn,
-  callApp
+  callApp,
 }
