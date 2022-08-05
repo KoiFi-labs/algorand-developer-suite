@@ -21,6 +21,7 @@ const usage = function() {
     appinfo:        Displays App info [TODO]
     callapp:        Issues a transaction that calls an application, uses ACCOUNT_1
                     from .env as sender
+    callTxnGroup:   Executes a txn group from a json file
     help:           Displays this help guide
   `
 
@@ -120,9 +121,24 @@ const appinfoUsage = () => {
   console.log(usageText)
 }
 
+const callTxnGroupUsage = () => {
+  const usageText = `
+  usage:
+
+    $ calltxngroup <options>
+  
+  options:
+
+    -g <string>  Name of json file to construct txn group from
+    -h           Displays this help guide
+  `
+  console.log(usageText)
+}
+
 module.exports = {
   usage,
   createAccountUsage,
   createAppUsage,
-  callAppUsage
+  callAppUsage,
+  callTxnGroupUsage
 }

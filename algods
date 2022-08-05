@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 const args = process.argv;
-const { usage, createAccountUsage, createAppUsage, callAppUsage } = require('./utils/usageFunctions')
+const { usage, createAccountUsage, createAppUsage, callAppUsage, callTxnGroupUsage } = require('./utils/usageFunctions')
 const sandboxService = require('./services/sandboxService')
 const accountsService = require('./services/accountsService')
 const appsService = require('./services/appsService')
@@ -141,6 +141,18 @@ const processCreateAccountInstruction = () => {
   })
 }
 
+const processCallTxnGroupInstruction = () => {
+  if (!args[3] || !args[4]) {
+    errorLog('Missing options')
+    callTxnGroupUsage()
+  } else if (args[3] === '-g') {
+    txnsService.callTxnGroup(args[4])
+  } else {
+    errorLog('Invalid options')
+    callTxnGroupUsage()
+  }
+}
+
 switch(args[2]) {
   case 'help':
     usage();
@@ -168,6 +180,9 @@ switch(args[2]) {
     break
   case 'callapp':
     processCallAppInstruction();
+    break
+  case 'calltxngroup':
+    processCallTxnGroupInstruction();
     break
   case undefined:
     usage();
