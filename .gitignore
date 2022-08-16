@@ -325,3 +325,7 @@ pyteal/build/*
 
 # utils
 commands.md
+
+# testing
+test/*
+assets/*
